@@ -9,7 +9,7 @@ const Signup = () => {
     success: false,
   });
 
-  const {name, email, password} = values;
+  const {name, email, password, success, error} = values;
 
   const handleChange = name => event => {
     setValues ({...values, error: false, [name]: event.target.value});
@@ -28,13 +28,26 @@ const Signup = () => {
       .then (response => {
         return response.json ();
       })
-      .catch (err => {
-        console.log (err);
+      .catch (error => {
+        console.log (error);
       });
   };
   const clickSubmit = event => {
     event.preventDefault ();
-    signup ({name, email, password});
+    signup ({name, email, password}).then (data => {
+      if (data.error) {
+        setValues ({...values, error: data.error, success: false});
+      } else {
+        setValues ({
+          ...values,
+          name: '',
+          email: '',
+          password: '',
+          error: '',
+          success: true,
+        });
+      }
+    });
   };
 
   const signUpForm = () => {
@@ -47,6 +60,7 @@ const Signup = () => {
               onChange={handleChange ('name')}
               type="text"
               className="form-control"
+              value={name}
             />
           </div>
 
@@ -56,6 +70,7 @@ const Signup = () => {
               onChange={handleChange ('email')}
               type="email"
               className="form-control"
+              value={email}
             />
           </div>
 
@@ -65,6 +80,7 @@ const Signup = () => {
               onChange={handleChange ('password')}
               type="password"
               className="form-control"
+              value={password}
             />
           </div>
 
@@ -77,8 +93,32 @@ const Signup = () => {
       </div>
     );
   };
+  const showError = () => {
+    return (
+      <div
+        className="alert alert-danger"
+        style={{display: error ? '' : 'none'}}
+      >
+        {error}
+      </div>
+    );
+  };
+
+  const showSuccess = () => {
+    return (
+      <div
+        className="alert alert-info"
+        style={{display: success ? '' : 'none'}}
+      >
+        New account is created. Please signin
+      </div>
+    );
+  };
+
   return (
     <div>
+      {showSuccess ()}
+      {showError ()}
       {signUpForm ()}
     </div>
   );
