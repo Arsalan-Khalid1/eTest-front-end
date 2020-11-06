@@ -15,12 +15,26 @@ const Signup = () => {
     setValues ({...values, error: false, [name]: event.target.value});
   };
 
-  const signup = (name, email, password) => {
+  const signup = user => {
     console.log (name, email, password);
+    return fetch (`${API}/signup`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify (user),
+    })
+      .then (response => {
+        return response.json ();
+      })
+      .catch (err => {
+        console.log (err);
+      });
   };
   const clickSubmit = event => {
     event.preventDefault ();
-    signup (name, email, password);
+    signup ({name, email, password});
   };
 
   const signUpForm = () => {
@@ -48,7 +62,7 @@ const Signup = () => {
           <div className="form-group">
             <label className="text-muted">Password</label>
             <input
-              onChange={handleChange ('paswword')}
+              onChange={handleChange ('password')}
               type="password"
               className="form-control"
             />
