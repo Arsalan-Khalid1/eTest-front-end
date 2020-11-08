@@ -55,6 +55,7 @@ const Signin = () => {
               onChange={handleChange ('password')}
               type="password"
               className="form-control"
+              autoComplete="off"
               value={password}
             />
           </div>
