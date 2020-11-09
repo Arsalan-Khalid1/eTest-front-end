@@ -4,6 +4,8 @@ import Signin from './users/Signin';
 import Signup from './users/Signup';
 import Home from './core/Home';
 import Menu from './core/Menu';
+import UserDashboard from '../src/users/UserDashboard';
+import PrivateRoute from '../src/auth/PrivateRoute';
 
 const Routes = () => {
   return (
@@ -11,13 +13,14 @@ const Routes = () => {
       <Menu />
       <Switch>
         <Route path="/" exact component={Home} />
-      </Switch>
-      <Switch>
+
         <Route path="/signin" exact component={Signin} />
-      </Switch>
-      <Switch>
+
         <Route path="/signup" exact component={Signup} />
+
+        <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
       </Switch>
+
     </BrowserRouter>
   );
 };

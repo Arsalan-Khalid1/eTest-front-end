@@ -44,13 +44,13 @@ export const authenticate = (data, next) => {
 
 export const signout = next => {
   if (typeof window !== 'undefined') {
-    localStorage.removeItem ('JWT');
-    next ();
     return fetch (`${API}/signout`, {
       method: 'GET',
     })
       .then (response => {
-        console.log ('signout', response);
+        localStorage.removeItem ('JWT');
+        next ();
+        return response.json ();
       })
       .catch (err => {
         console.log (err);
