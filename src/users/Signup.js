@@ -1,4 +1,4 @@
-import react, {useState} from 'react';
+import React, {useState} from 'react';
 import {signup} from '../auth/index';
 import {Link} from 'react-router-dom';
 

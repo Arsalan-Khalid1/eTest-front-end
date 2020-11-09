@@ -44,8 +44,13 @@ export const authenticate = (data, next) => {
 
 export const signout = next => {
   if (typeof window !== 'undefined') {
+    isAuthenticated ();
     return fetch (`${API}/signout`, {
       method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
     })
       .then (response => {
         localStorage.removeItem ('JWT');

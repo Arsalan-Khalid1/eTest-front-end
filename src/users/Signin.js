@@ -1,4 +1,4 @@
-import react, {useState} from 'react';
+import React, {useState} from 'react';
 import {signin, authenticate, isAuthenticated} from '../auth/index';
 import {Link, Redirect} from 'react-router-dom';
 
@@ -98,6 +98,10 @@ const Signin = () => {
       } else {
         return <Redirect to="/user/dashboard" />;
       }
+    }
+
+    if (isAuthenticated ()) {
+      return <Redirect to="/" />;
     }
   };
 
