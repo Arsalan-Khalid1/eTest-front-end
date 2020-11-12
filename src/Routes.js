@@ -3,6 +3,7 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Signin from './users/Signin';
 import Signup from './users/Signup';
 import Home from './core/Home';
+import Shop from './core/Shop';
 import Menu from './core/Menu';
 import UserDashboard from '../src/users/UserDashboard';
 import AdminDashboard from '../src/users/AdminDashboard';
@@ -17,6 +18,8 @@ const Routes = () => {
       <Menu />
       <Switch>
         <Route path="/" exact component={Home} />
+
+        <Route path="/shop" exact component={Shop} />
 
         <Route path="/signin" exact component={Signin} />
 

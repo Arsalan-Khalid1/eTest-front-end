@@ -34,7 +34,11 @@ const Home = () => {
   }, []);
 
   return (
-    <Layout title="Home Page" description="eCommerce app using MERN stack">
+    <Layout
+      title="Home Page"
+      description="eCommerce app using MERN stack"
+      className="container-fluid"
+    >
       <h2 className="mb-4">Best Sellers</h2>
       <div className="row">
         {productsBySell.map ((product, i) => {
