@@ -4,8 +4,13 @@ import {getProducts} from './apiCore';
 import Card from './Card';
 import {getCategories} from '../admin/apiAdmin';
 import CheckBox from './CheckBox';
+import RadioBox from './RadioBox';
+import {prices} from './fixedPrices';
 
 const Shop = () => {
+  const [myFilters, setMyFilters] = useState ({
+    filters: {category: [], price: []},
+  });
   const [categories, setCategories] = useState ([]);
   const [error, setError] = useState (false);
 
@@ -24,7 +29,24 @@ const Shop = () => {
   }, []);
 
   const handleFilters = (filters, filterBy) => {
-    console.log (filters, filterBy);
+    const newFilters = {...myFilters};
+    newFilters.filters[filterBy] = filters;
+    if (filterBy === 'price') {
+      let priceValues = handlePrice (filters);
+      newFilters.filters[filterBy] = priceValues;
+    }
+    setMyFilters (newFilters);
+  };
+
+  const handlePrice = value => {
+    const data = prices;
+    let array = [];
+    for (let key in data) {
+      if (data[key]._id === parseInt (value)) {
+        array = data[key].array;
+      }
+    }
+    return array;
   };
 
   return (
@@ -43,8 +65,15 @@ const Shop = () => {
               handleFilters={filters => handleFilters (filters, 'category')}
             />
           </ul>
+          <h4>Filter by Price Range</h4>
+          <div>
+            <RadioBox
+              prices={prices}
+              handleFilters={filters => handleFilters (filters, 'price')}
+            />
+          </div>
         </div>
-        <div className="col-8">Right Side Bar</div>
+        <div className="col-8">{JSON.stringify (myFilters)}</div>
       </div>
 
     </Layout>
